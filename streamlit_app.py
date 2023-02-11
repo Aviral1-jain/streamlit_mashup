@@ -10,6 +10,7 @@ from email import encoders
 import os
 import sys
 import io
+import ffmpeg
 
 #### GLOBAL VARIABLES ####
 
