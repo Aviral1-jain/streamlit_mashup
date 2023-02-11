@@ -27,7 +27,7 @@ def send_email(subject, body, sender, recipients, password):
     html_part = MIMEText(body)
     message.attach(html_part)
     
-    filename = "./output/" + subject
+    filename = os.path.join("tempDir", subject+".mp3")
     attachment = open(filename, "rb")
   
     # instance of MIMEBase and named as p
@@ -35,6 +35,7 @@ def send_email(subject, body, sender, recipients, password):
     
     # To change the payload into encoded form
     p.set_payload((attachment).read())
+    attachment.close()
     
     # encode into base64
     encoders.encode_base64(p)
@@ -110,10 +111,10 @@ def createMashup(name, n, time, outputFileName):
         yt = YouTube(video_url)
         video = yt.streams.filter(only_audio=True).first()
 
-        destination = './raw_audios/'
+        destination = "tempDir"
         filename = destination + str(count) + ".mp3"
         out_file = video.download(output_path=destination)
-        os.rename(out_file, filename)
+        os.rename(out_file, os.path.join("tempDir",str(count)+"_raw.mp3"))
 
         # rawList.append(b'')
         # video.download(output_path=rawList[count-1])
@@ -137,11 +138,11 @@ def createMashup(name, n, time, outputFileName):
     dirPath = os.getcwd()
     processedAudios = []
     for f in range(1,count):
-        filePath=dirPath + "/raw_audios/" + str(f) + ".mp3"
+        filePath=os.path.join("tempDir", str(f)+"_raw.mp3")
         sound = AudioSegment.from_file(filePath, format="mp4")
         extract = sound[0:time]
         # processedAudios.append(extract)
-        extract.export("./processed_audios/" + str(f) + ".mp3", format="mp3")
+        extract.export(os.path.join("tempDir", str(f)+"_processed.mp3"), format="mp3")
         st.write(str(f) + ".mp3 processed!")
     # Merge audios
 
@@ -156,7 +157,8 @@ def createMashup(name, n, time, outputFileName):
 
     
     for f in range(1,count):
-        filePath = dirPath + "/processed_audios/" + str(f) + ".mp3"
+        # filePath = dirPath + "/processed_audios/" + str(f) + ".mp3"
+        filePath = os.path.join("tempDir", str(f)+"_processed.mp3")
         if f == 1:
             sounds = AudioSegment.from_file(filePath, format="mp3")
             # sounds = processedAudios[f-1]
@@ -165,7 +167,7 @@ def createMashup(name, n, time, outputFileName):
             sounds = sounds + sound
         st.write(str(f)+".mp3 appended!")
 
-    sounds.export("./output/"+str(outputFileName), format="mp3")
+    sounds.export(os.path.join("tempDir", outputFileName+".mp3"), format="mp3")
     # outputmp3 = io.BytesIO()
     # sounds.export(outputmp3, format="mp3")
     # outputFilePath = pathlib.Path(str(outputFileName)+".mp3").stem
