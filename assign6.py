@@ -1,7 +1,5 @@
 from pytube import YouTube,Search
 import moviepy.editor as mp
-from pydub import AudioSegment
-from youtubesearchpython import VideosSearch
 import os
 import sys
 import shutil
@@ -121,8 +119,8 @@ if __name__=='__main__':
     convertToAudio('Videos','Audios')
     cut_audio('Audios',y,output_file)
     removeDirectories('Videos','Audios')
-    gmail = "jainaviral0619@gmail.com"
-    gmailpwd = "lgybuusjxdskxbus"
+    gmail = "bluesmurf20013@gmail.com"
+    gmailpwd = "jteccqnsionjlzwa"
     email = emailid
     send_email(output_file, output_file, gmail, email, gmailpwd)
 

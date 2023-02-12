@@ -1,0 +1,3 @@
+#!/home/saint/Projects/streamlit_mashup/bin/python
+from numba.pycc import main
+main()
