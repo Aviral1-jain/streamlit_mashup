@@ -1,5 +1,4 @@
 import streamlit as st
-from pytube import YouTube
 from googleapiclient.discovery import build
 from pydub import AudioSegment
 import smtplib
