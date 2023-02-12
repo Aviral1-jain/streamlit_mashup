@@ -1,15 +1,7 @@
 import streamlit as st
-from googleapiclient.discovery import build
-from pydub import AudioSegment
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
-from email import encoders
 import os
 import sys
 import io
-import ffmpeg
 import subprocess
 
 #### GLOBAL VARIABLES ####
